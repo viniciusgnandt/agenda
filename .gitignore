@@ -9,5 +9,7 @@ dist
 
 # Database / Docker volumes
 postgres_data
+database/postgres/
+database/postgres/**
 database/postgree_db/
-database/postgree_db/**
+database/postgres_db/**

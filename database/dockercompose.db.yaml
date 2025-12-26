@@ -11,7 +11,7 @@ services:
     ports:
       - "7010:5432"
     volumes:
-      - ./postgree_db:/var/lib/postgresql/data
+      - ./postgres:/var/lib/postgresql/data
     restart: unless-stopped
     networks:
       - agenda-net
