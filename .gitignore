@@ -1,9 +1,11 @@
+# Node
 node_modules
-.env
-.env.local
 dist
 .next
 
+# Env
+.env
+.env.local
 
 # Database / Docker volumes
 postgres_data
