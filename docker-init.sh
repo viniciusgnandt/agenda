@@ -40,6 +40,6 @@ cd ..
 
 echo "✅ Ambiente pronto!"
 echo ""
-echo "🌍 Frontend: http://localhost:3000"
-echo "🧠 Backend:  http://localhost:3333"
+echo "🌍 Frontend: http://localhost:7000"
+echo "🧠 Backend:  http://localhost:7010"
 echo "🐘 Postgres: localhost:7010"
