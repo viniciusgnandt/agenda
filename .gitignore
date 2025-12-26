@@ -4,4 +4,4 @@ node_modules
 dist
 .next
 postgres_data
-./database/postgree_db
+database/postgree_db/
