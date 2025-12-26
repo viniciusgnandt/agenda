@@ -11,7 +11,9 @@ services:
     networks:
       - agenda-net
     volumes:
-      - .:/app:delegated
+      # For production-like runs do NOT mount the project directory.
+      # Mounting the host dir into /app overwrites the built artifacts inside the image
+      - .:/app
       - /app/node_modules
 
 networks:
