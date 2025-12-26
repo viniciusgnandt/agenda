@@ -6,23 +6,18 @@ WORKDIR /app
 
 COPY package*.json ./
 
-# Instala dependências
+# Instala dependências (image-level cache)
 RUN npm install --production=false
 
-# Copia o restante do código (excluindo dist por .dockerignore)
+# Copia o restante do código (source will be overridden by bind when composing)
 COPY . .
 
-# Remove dist antigo se existir
-RUN rm -rf dist
-
-# Compila o projeto (Prisma generation skipped)
-RUN npm run build
-
-# Verifica saída
-RUN if [ -f dist/server.js ]; then echo "[build] dist/server.js found"; else echo "[build] dist/server.js NOT FOUND"; fi
+# Copy entrypoint which will run npm install/build at container start if bind-mounted
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Expõe a porta do backend
 EXPOSE 3000
 
-# Comando de start direto com Node.js
-ENTRYPOINT ["node", "dist/server.js"]
+# Use entrypoint to ensure builds happen when project is bind-mounted from host
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]

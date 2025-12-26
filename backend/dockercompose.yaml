@@ -11,11 +11,15 @@ services:
     networks:
       - agenda-net
     volumes:
-      # For production-like runs do NOT mount the project directory.
-      # Mounting the host dir into /app overwrites the built artifacts inside the image
-      - .:/app
-      - /app/node_modules
+      # Bind the project directory so container changes reflect to host
+      - .:/app:delegated
+      # Keep node_modules in a docker-managed named volume to avoid host/OS conflicts
+      - backend_node_modules:/app/node_modules
 
 networks:
   agenda-net:
     external: true
+
+volumes:
+  backend_node_modules:
+    driver: local
