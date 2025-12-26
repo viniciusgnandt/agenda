@@ -11,10 +11,11 @@ services:
     networks:
       - agenda-net
     volumes:
-      # Bind the project directory so container changes reflect to host
-      - .:/app:delegated
-      # Keep node_modules in a docker-managed named volume to avoid host/OS conflicts
+      # Bind only src/ so source edits are visible, but dist/ stays in container/volume
+      - ./src:/app/src:delegated
+      # Keep node_modules and dist in docker-managed volumes for reliable builds
       - backend_node_modules:/app/node_modules
+      - backend_dist:/app/dist
 
 networks:
   agenda-net:
@@ -22,4 +23,6 @@ networks:
 
 volumes:
   backend_node_modules:
+    driver: local
+  backend_dist:
     driver: local
