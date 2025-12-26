@@ -2,6 +2,16 @@ node_modules
 npm-debug.log
 dist
 .env.local
+.env.local.*
+.git
+.gitignore
+README.md
+.DS_Store
+docker-compose.override.yaml
+**/__pycache__node_modules
+npm-debug.log
+dist
+.env.local
 .git
 .gitignore
 README.md

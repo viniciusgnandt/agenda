@@ -11,7 +11,7 @@ services:
     networks:
       - agenda-net
     volumes:
-      - .:/app
+      - .:/app:delegated
       - /app/node_modules
 
 networks:
