@@ -9,7 +9,7 @@ services:
     env_file:
       - .env
     environment:
-      - MIGRATE=true
+      - MIGRATE=false
     networks:
       - agenda-net
     volumes:
