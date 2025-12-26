@@ -8,6 +8,8 @@ services:
       - "7001:3000"
     env_file:
       - .env
+    environment:
+      - MIGRATE=true
     networks:
       - agenda-net
     volumes:
