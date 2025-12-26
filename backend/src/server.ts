@@ -14,7 +14,7 @@ app.get("/health", (req, res) => {
 });
 
 app.get("/hello", (req, res) => {
-  res.send("Backend da agenda está funcionando 3.0 🚀");
+  res.send("Backend da agenda está funcionando 4.0 🚀");
 });
 
 const server = app.listen(PORT, () => {
