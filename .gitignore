@@ -4,8 +4,8 @@ dist
 .next
 
 # Env
-*/.env
-*/.env.local
+.env
+.env.local
 
 # Database / Docker volumes
 postgres_data
