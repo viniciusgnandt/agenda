@@ -7,62 +7,144 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-#model User {
+enum UserRole {
+  ADMIN
+  PROFESSIONAL
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+/* =======================
+   EMPRESA (TENANT)
+======================= */
+model Company {
+  id          String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  phone       String?
+  createdAt   DateTime @default(now())
+
+  users        User[]
+  professionals Professional[]
+  services     Service[]
+  customers    Customer[]
+  appointments Appointment[]
+}
+
+/* =======================
+   USUÁRIOS DO SISTEMA
+======================= */
+model User {
   id        String   @id @default(uuid())
   name      String
   email     String   @unique
   password  String
-  role      Role     @default(CLIENT)
+  role      UserRole
   createdAt DateTime @default(now())
 
-  appointments Appointment[]
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String
 }
 
-#model Barbershop {
+/* =======================
+   CLIENTES
+======================= */
+model Customer {
   id        String   @id @default(uuid())
   name      String
-  address   String
+  phone     String
+  email     String?
   createdAt DateTime @default(now())
 
-  services       Service[]
-  professionals  Professional[]
-}
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String
 
-#model Service {
-  id           String   @id @default(uuid())
-  name         String
-  price        Float
-  durationMin  Int
-  barbershopId String
-
-  barbershop Barbershop @relation(fields: [barbershopId], references: [id])
-}
-
-#model Professional {
-  id           String   @id @default(uuid())
-  name         String
-  barbershopId String
-
-  barbershop   Barbershop @relation(fields: [barbershopId], references: [id])
   appointments Appointment[]
 }
 
-#model Appointment {
-  id             String   @id @default(uuid())
-  date           DateTime
-  userId         String
+/* =======================
+   PROFISSIONAIS
+======================= */
+model Professional {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String
+
+  services      ProfessionalService[]
+  workingHours  WorkingHour[]
+  appointments  Appointment[]
+}
+
+/* =======================
+   SERVIÇOS
+======================= */
+model Service {
+  id        String   @id @default(uuid())
+  name      String
+  price     Decimal
+  duration  Int // minutos
+  createdAt DateTime @default(now())
+
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String
+
+  professionals ProfessionalService[]
+  appointments  Appointment[]
+}
+
+/* =======================
+   PROFISSIONAL x SERVIÇO
+======================= */
+model ProfessionalService {
+  professional   Professional @relation(fields: [professionalId], references: [id])
   professionalId String
-  serviceId      String
-  createdAt      DateTime @default(now())
 
-  user         User         @relation(fields: [userId], references: [id])
-  professional Professional @relation(fields: [professionalId], references: [id])
-  service      Service      @relation(fields: [serviceId], references: [id])
+  service   Service @relation(fields: [serviceId], references: [id])
+  serviceId String
+
+  @@id([professionalId, serviceId])
 }
 
-#enum Role {
-  ADMIN
-  BARBER
-  CLIENT
+/* =======================
+   HORÁRIO DE TRABALHO
+======================= */
+model WorkingHour {
+  id             String   @id @default(uuid())
+  dayOfWeek      Int // 0=Domingo, 6=Sábado
+  startTime      String // "09:00"
+  endTime        String // "18:00"
+
+  professional   Professional @relation(fields: [professionalId], references: [id])
+  professionalId String
 }
 
+/* =======================
+   AGENDAMENTOS
+======================= */
+model Appointment {
+  id        String   @id @default(uuid())
+  date      DateTime
+  status    AppointmentStatus @default(SCHEDULED)
+  notes     String?
+  createdAt DateTime @default(now())
+
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String
+
+  customer   Customer @relation(fields: [customerId], references: [id])
+  customerId String
+
+  professional   Professional @relation(fields: [professionalId], references: [id])
+  professionalId String
+
+  service   Service @relation(fields: [serviceId], references: [id])
+  serviceId String
+}
