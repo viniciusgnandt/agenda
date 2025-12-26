@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agenda_backend
+    env_file:
+      - .env
+    ports:
+      - "7001:3000"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - agenda-net
+
+networks:
+  agenda-net:
+    external: true

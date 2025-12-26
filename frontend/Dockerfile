@@ -1,13 +1,23 @@
+# Base
 FROM node:20-alpine
 
+# Diretório de trabalho
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
+# Copia dependências primeiro
+COPY package*.json ./
+
+# Instala dependências
 RUN npm install
 
+# Copia o restante
 COPY . .
 
+# Build do Next.js
+RUN npm run build
+
+# Expõe a porta padrão do Next
 EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
-
+# Start em modo produção
+CMD ["npm", "run", "start"]
