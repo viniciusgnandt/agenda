@@ -21,6 +21,8 @@ echo "🐘 Subindo Postgres..."
 cd database
 docker compose -f dockercompose.db.yaml up -d --build
 cd ..
+echo "⏳ Aguardando 5 segundos..."
+sleep 5
 
 # =========================
 # Backend
@@ -29,6 +31,8 @@ echo "🧠 Subindo Backend..."
 cd backend
 docker compose -f dockercompose.yaml up -d --build
 cd ..
+echo "⏳ Aguardando 5 segundos..."
+sleep 5
 
 # =========================
 # Frontend
@@ -37,6 +41,8 @@ echo "🌐 Subindo Frontend..."
 cd frontend
 docker compose -f dockercompose.yaml up -d --build
 cd ..
+echo "⏳ Aguardando 5 segundos..."
+sleep 5
 
 echo "✅ Ambiente pronto!"
 echo ""

@@ -12,4 +12,10 @@ postgres_data
 database/postgres/
 database/postgres/**
 database/postgree_db/
-database/postgres_db/**
+database/postgres_db/**database/postgres
+
+# Docker volumes (local)
+backend_node_modules
+backend_dist
+frontend_node_modules
+frontend_next
