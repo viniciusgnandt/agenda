@@ -19,7 +19,7 @@ fi
 # =========================
 echo "🐘 Subindo Postgres..."
 cd database
-docker compose -f dockercompose.db.yaml up -d --build >/dev/null
+docker compose -f dockercompose.db.yaml up -d --build
 cd ..
 
 # =========================
@@ -27,7 +27,7 @@ cd ..
 # =========================
 echo "🧠 Subindo Backend..."
 cd backend
-docker compose up -d --build >/dev/null
+docker compose -f dockercompose.yaml up -d --build
 cd ..
 
 # =========================
@@ -35,11 +35,11 @@ cd ..
 # =========================
 echo "🌐 Subindo Frontend..."
 cd frontend
-docker compose up -d --build >/dev/null
+docker compose -f dockercompose.yaml up -d --build
 cd ..
 
 echo "✅ Ambiente pronto!"
 echo ""
 echo "🌍 Frontend: http://localhost:7000"
-echo "🧠 Backend:  http://localhost:7010"
-echo "🐘 Postgres: localhost:7010"
+echo "🧠 Backend:  http://localhost:7001"
+echo "🐘 Postgres: localhost:5432"
