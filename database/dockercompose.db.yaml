@@ -19,3 +19,5 @@ services:
 networks:
   agenda-net:
     external: true
+
+#database_url: postgresql://useradmin:snHmPrrxqBZFeguMPAMRRmKBujunuKVt@test_agendadb:5432/agenda_db
