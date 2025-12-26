@@ -2,19 +2,17 @@ version: "3.9"
 
 services:
   backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: agenda_backend
-    env_file:
-      - .env
+    build: .
+    container_name: agenda-backend
     ports:
       - "7001:3000"
-    depends_on:
-      - postgres
-    restart: unless-stopped
+    env_file:
+      - .env
     networks:
       - agenda-net
+    volumes:
+      - .:/app
+      - /app/node_modules
 
 networks:
   agenda-net:

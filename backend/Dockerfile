@@ -14,13 +14,13 @@ RUN npm install
 COPY . .
 
 # Gera o client do Prisma
-RUN npx prisma generate
+#RUN npx prisma generate
 
-# Build do TypeScript
+# Compila TypeScript
 RUN npm run build
 
 # Expõe a porta do backend
 EXPOSE 3000
 
 # Comando de start
-CMD ["npm", "run", "start"]
+CMD ["npm", "start"]
