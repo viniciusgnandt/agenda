@@ -11,11 +11,9 @@ if [ ! -d "/app/node_modules" ] || [ -z "$(ls -A /app/node_modules 2>/dev/null)"
   npm install --production=false
 fi
 
-# Build TypeScript if dist missing or stale
-if [ ! -f "/app/dist/server.js" ]; then
-  echo "[entrypoint] Building project..."
-  npm run build
-fi
+# Always rebuild TypeScript to catch source changes
+echo "[entrypoint] Building project..."
+npm run build
 
 echo "[entrypoint] Starting app"
 exec node dist/server.js
