@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: prod_agendadb
+    environment:
+      POSTGRES_USER: useradmin
+      POSTGRES_PASSWORD: cYugdEfZCRezNDieoiRCfQZuCNCAOjbC
+      POSTGRES_DB: agenda_db
+    ports:
+      - "8010:5432"
+    volumes:
+      - ./prod/postgree_db:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - agenda-net
+
+networks:
+  agenda-net:
+    external: true
