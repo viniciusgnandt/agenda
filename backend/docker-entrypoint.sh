@@ -15,5 +15,20 @@ fi
 echo "[entrypoint] Building project..."
 npm run build
 
+# Ensure Prisma client is generated (in case schema changed or node_modules was recreated)
+echo "[entrypoint] Ensuring Prisma client..."
+if [ -d "node_modules/.prisma" ] || [ -d "node_modules/@prisma/client" ]; then
+  echo "[entrypoint] Prisma client appears present"
+else
+  echo "[entrypoint] Generating Prisma client..."
+  npm run prisma:generate
+fi
+
+# Optionally run migrations when MIGRATE=true
+if [ "${MIGRATE}" = "true" ]; then
+  echo "[entrypoint] Running prisma migrations (deploy)..."
+  npx prisma migrate deploy || true
+fi
+
 echo "[entrypoint] Starting app"
 exec node dist/server.js

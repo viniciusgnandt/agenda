@@ -17,6 +17,10 @@ app.get("/hello", (req, res) => {
   res.send("Backend da agenda está funcionando 4.0 🚀");
 });
 
+app.get("/vinicius", (req, res) => {
+  res.send("Vinicius é o melhor dev!");
+});
+
 const server = app.listen(PORT, () => {
   console.log(`✅ Backend rodando na porta ${PORT}`);
 });
