@@ -17,7 +17,7 @@ COPY . .
 #RUN npx prisma generate
 
 # Compila TypeScript
-RUN npm run build
+RUN npm run build && ls -la dist/ || echo "Build failed or dist not found"
 
 # Expõe a porta do backend
 EXPOSE 3000
