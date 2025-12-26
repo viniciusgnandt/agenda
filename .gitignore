@@ -3,5 +3,9 @@ node_modules
 .env.local
 dist
 .next
+
+
+# Database / Docker volumes
 postgres_data
 database/postgree_db/
+database/postgree_db/**
