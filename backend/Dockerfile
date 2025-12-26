@@ -15,9 +15,11 @@ COPY . .
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Generate Prisma client and build TypeScript at image build time
-# This ensures the generated client is available in the image/node_modules
-RUN npm run prisma:generate && npm run build
+# Install OpenSSL for Prisma and build TypeScript at image build time
+RUN apt-get update -y \
+	&& apt-get install -y --no-install-recommends openssl ca-certificates \
+	&& rm -rf /var/lib/apt/lists/* \
+	&& npm run build
 
 # Expõe a porta do backend
 EXPOSE 3000
