@@ -18,9 +18,7 @@ fi
 # Banco de dados
 # =========================
 echo "🐘 Subindo Postgres..."
-cd database
-docker compose -f dockercompose.yaml up -d
-cd ..
+docker compose -f ./database/dockercompose.yaml up -d --build
 echo "⏳ Aguardando 5 segundos..."
 sleep 5
 
@@ -28,9 +26,7 @@ sleep 5
 # Backend
 # =========================
 echo "🧠 Subindo Backend..."
-cd backend
-docker compose -f dockercompose.yaml up -d --build
-cd ..
+docker compose -f ./backend/dockercompose.yaml up -d --build
 echo "⏳ Aguardando 5 segundos..."
 sleep 5
 
@@ -38,9 +34,7 @@ sleep 5
 # Frontend
 # =========================
 echo "🌐 Subindo Frontend..."
-cd frontend
-docker compose -f dockercompose.yaml up -d --build
-cd ..
+docker compose -f ./frontend/dockercompose.yaml up -d --build
 echo "⏳ Aguardando 5 segundos..."
 sleep 5
 
@@ -48,4 +42,4 @@ echo "✅ Ambiente pronto!"
 echo ""
 echo "🌍 Frontend: http://localhost:7000"
 echo "🧠 Backend:  http://localhost:7001"
-echo "🐘 Postgres: localhost:5432"
+echo "🐘 Postgres: localhost:7010"
