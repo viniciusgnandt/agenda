@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+#model User {
   id        String   @id @default(uuid())
   name      String
   email     String   @unique
@@ -18,7 +18,7 @@ model User {
   appointments Appointment[]
 }
 
-model Barbershop {
+#model Barbershop {
   id        String   @id @default(uuid())
   name      String
   address   String
@@ -28,7 +28,7 @@ model Barbershop {
   professionals  Professional[]
 }
 
-model Service {
+#model Service {
   id           String   @id @default(uuid())
   name         String
   price        Float
@@ -38,7 +38,7 @@ model Service {
   barbershop Barbershop @relation(fields: [barbershopId], references: [id])
 }
 
-model Professional {
+#model Professional {
   id           String   @id @default(uuid())
   name         String
   barbershopId String
@@ -47,7 +47,7 @@ model Professional {
   appointments Appointment[]
 }
 
-model Appointment {
+#model Appointment {
   id             String   @id @default(uuid())
   date           DateTime
   userId         String
@@ -60,7 +60,7 @@ model Appointment {
   service      Service      @relation(fields: [serviceId], references: [id])
 }
 
-enum Role {
+#enum Role {
   ADMIN
   BARBER
   CLIENT
