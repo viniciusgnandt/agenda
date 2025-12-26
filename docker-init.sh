@@ -19,7 +19,7 @@ fi
 # =========================
 echo "🐘 Subindo Postgres..."
 cd database
-docker compose -f dockercompose.db.yaml up -d --build
+docker compose -f dockercompose.yaml up -d
 cd ..
 echo "⏳ Aguardando 5 segundos..."
 sleep 5
