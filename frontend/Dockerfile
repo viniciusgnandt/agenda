@@ -1,23 +1,24 @@
-# Base
-FROM node:20-alpine
+FROM node:20-slim AS builder
 
-# Diretório de trabalho
 WORKDIR /app
 
-# Copia dependências primeiro
+# Copia package.json primeiro para aproveitar cache
 COPY package*.json ./
 
-# Instala dependências
-RUN npm install
+RUN npm install --production=false
 
-# Copia o restante
+# Copia todo o código e builda o Next.js
 COPY . .
-
-# Build do Next.js
 RUN npm run build
 
-# Expõe a porta padrão do Next
+FROM node:20-slim AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+# Copia os artefatos do build
+COPY --from=builder /app /app
+
 EXPOSE 3000
 
-# Start em modo produção
 CMD ["npm", "run", "start"]
