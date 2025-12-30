@@ -1,4 +1,5 @@
 import express from "express";
+import prisma from './prismaClient.js';
 
 const app = express();
 app.use(express.json());
@@ -7,6 +8,15 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
+app.get('/usuarios', async (req, res) => {
+  try {
+    const usuarios = await prisma.user.findMany();
+    res.json(usuarios);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao buscar usuários' });
+  }
+});
 
 app.get("/health", (req, res) => {
   res.json({
